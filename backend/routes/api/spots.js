@@ -130,7 +130,7 @@ router.get("/", validateQuery, async (req, res) => {
   //   previewImage: spot.previewImage,
   //     };
   try {
-    const spots = await Spot.findAll();
+    // const spots = await Spot.findAll();
     res
       .status(200)
       .json({ Spots: spot, page: parseInt(page), size: parseInt(size) });
