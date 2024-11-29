@@ -100,10 +100,11 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       price: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: DataTypes.FLOAT,
         allowNull: false,
         validate: {
           notEmpty: { msg: "Description is required" },
+          isFloat: true,
         },
       },
       //createdAt: spot.createdAt,
