@@ -1,1 +1,68 @@
 /* TODO: Add sitewide styles */
+
+/* Basic layout and styling */
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #4f489b;
+}
+
+ul {
+  background-color: #9b4873;
+}
+
+body {
+  background-color: white;
+}
+
+.header .logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.auth button {
+  margin-left: 10px;
+}
+
+.landing-page {
+  padding: 20px;
+  background-color: blanchedalmond;
+}
+
+.spot-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.spot-tile {
+  width: 200px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.spot-tile img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(63, 120, 94, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal form {
+  background-color: rgb(120, 69, 69);
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+}
