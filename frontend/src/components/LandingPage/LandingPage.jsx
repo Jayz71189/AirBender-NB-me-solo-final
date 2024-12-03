@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import SpotTile from "./SpotTile";
+import SpotTile from "../SpotTile";
 import "./LandingPage.css"; // Add styling for layout
 
 const LandingPage = () => {

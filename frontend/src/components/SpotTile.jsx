@@ -56,7 +56,11 @@ const SpotTile = ({ spot }) => {
         <h3>{name}</h3>
         <p>{`${city}, ${state}`}</p>
         <p>{`$${price} / night`}</p>
-        <p>{avgRating ? `${avgRating} stars` : "New"}</p>
+        <p>
+          {avgRating === null
+            ? "New"
+            : `${parseFloat(avgRating).toFixed(1)} stars`}
+        </p>
       </div>
     </div>
   );
