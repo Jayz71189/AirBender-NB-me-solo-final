@@ -1,0 +1,87 @@
+.spot-detail-container {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.spot-detail {
+  flex: 3;
+  margin-right: 20px;
+}
+
+.two-column-layout {
+  display: flex;
+  gap: 20px; /* Space between columns */
+}
+
+.images-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.large-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.small-images {
+  display: flex;
+  gap: 10px;
+}
+
+.small-images img {
+  width: 20%;
+  height: auto;
+}
+
+.spot-info {
+  flex: 2;
+}
+
+.callout-box {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.price-section {
+  margin-bottom: 20px;
+}
+
+/* .button-info {
+  display: flex;
+  justify-content: left;
+  align-items: flex-start;
+} */
+
+.price {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.price-label {
+  font-size: 16px;
+  color: #666;
+}
+
+.reserve-button {
+  display: block;
+  width: 100%;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background-color: #ff5a5f;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.reserve-button:hover {
+  background-color: #e14b50;
+}

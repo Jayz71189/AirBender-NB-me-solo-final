@@ -1,11 +1,17 @@
 {
-	"folders": [
-		{
-			"path": "../.."
-		},
-		{
-			"path": "../../../../../Desktop Documents/Appacademy/aa12-authenticate-me"
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "path": "../.."
+    },
+    {
+      "path": "../../../../../Desktop Documents/Appacademy/aa12-authenticate-me"
+    },
+    {
+      "path": "../../../../../Desktop Documents/Appacademy/testing-m4-action"
+    },
+    {
+      "path": "../../../../../Desktop Documents/Appacademy/aa17-booleans-2"
+    }
+  ],
+  "settings": {}
 }
