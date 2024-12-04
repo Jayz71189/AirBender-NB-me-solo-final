@@ -5,6 +5,7 @@ import Navigation from "./components/Navigation/Navigation";
 import * as sessionActions from "./store/session";
 import LandingPage from "./components/LandingPage/LandingPage";
 import SpotDetail from "./components/SpotDetails";
+import CreateSpot from "./components/CreateSpot";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function Layout() {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "/spots/:id",
         element: <SpotDetail />,
+      },
+      {
+        path: "/spots/new",
+        element: <CreateSpot />,
       },
       {
         path: "/review/:id",
