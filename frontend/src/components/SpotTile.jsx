@@ -1,56 +1,9 @@
 // import { useNavigate } from "react-router-dom";
 import "./SpotTile.css"; // Add styling for individual tiles
 import { useNavigate } from "react-router-dom";
-// import { Link } from "react-router-dom";
-
-// const SpotTile = (spot) => {
-//   //   if (!spot) {
-//   //     return <div>Loading...</div>; // Fallback if spot is undefined
-//   //   }
-//   console.log(spot);
-//   const navigate = useNavigate();
-
-//   const handleClick = () => {
-//     navigate(`/spots/${spot.id}`);
-//   };
-
-//   return (
-//     <div className="spot-tile" onClick={handleClick} title={spot.name}>
-//       {/* <Link to={`/spots/${spot.id}`}> */}
-//       <img src={spot.thumbnailUrl} alt={spot.name} className="spot-thumbnail" />
-//       <div className="spot-info">
-//         <p>
-//           {spot.city}, {spot.state}
-//         </p>
-//         <p>
-//           {spot.avgRating ? (
-//             <>
-//               <span className="star-icon">★</span> {spot.avgRating.toFixed(1)}
-//             </>
-//           ) : (
-//             "New"
-//           )}
-//         </p>
-//         <p>${spot.price} / night</p>
-//       </div>
-//       {/* </Link> */}
-//     </div>
-//   );
-// };
-
-// export default SpotTile;
 
 const SpotTile = ({ spot }) => {
-  const {
-    id,
-    name,
-    city,
-    state,
-    price,
-    previewImage,
-    // avgRating,
-    avgRating,
-  } = spot;
+  const { id, name, city, state, price, previewImage, avgRating } = spot;
 
   const navigate = useNavigate();
 
