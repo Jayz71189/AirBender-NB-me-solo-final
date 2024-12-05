@@ -1,0 +1,12 @@
+.manage-spots {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.spots-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 20px;
+}

@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { csrfFetch } from "../store/csrf";
 
 const CreateSpot = () => {
   const [formData, setFormData] = useState({
+    name: "",
     country: "",
     address: "",
     city: "",
     state: "",
-    lat: "",
-    long: "",
+    lat: 60,
+    lng: 170,
     description: "",
     title: "",
     price: "",
@@ -17,10 +19,13 @@ const CreateSpot = () => {
   });
 
   const [errors, setErrors] = useState({
+    name: "",
     country: "",
     address: "",
     city: "",
     state: "",
+    lat: "",
+    lng: "",
     description: "",
     title: "",
     price: "",
@@ -60,6 +65,10 @@ const CreateSpot = () => {
       validationErrors.title = "Title is required";
       isValid = false;
     }
+    if (!formData.name) {
+      validationErrors.title = "Name is required";
+      isValid = false;
+    }
     if (!formData.price) {
       validationErrors.price = "Price per night is required";
       isValid = false;
@@ -86,10 +95,12 @@ const CreateSpot = () => {
       // Proceed with form submission logic (e.g., API request)
       try {
         // Sending form data to backend to create a new spot
-        const response = await fetch("/api/spots", {
+        const newFormData = { ...formData };
+        newFormData.price = Number(newFormData.price);
+        const response = await csrfFetch("/api/spots", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(newFormData),
         });
 
         if (response.ok) {
@@ -98,6 +109,13 @@ const CreateSpot = () => {
 
           // Navigate to the new spot's detail page
           navigate(`/spots/${spotId}`);
+        } else {
+          const json = await response.json();
+          console.log("json", json);
+        }
+
+        if (response.status === 403) {
+          alert("You must be logged in to create a spot.");
         } else {
           console.error("Error creating spot");
         }
@@ -117,7 +135,7 @@ const CreateSpot = () => {
 
   const handleImageUrlChange = (e, index) => {
     const { value } = e.target;
-    const updatedImageUrls = [...formData.imageUrls];
+    const updatedImageUrls = [...formData.previewImageUrl];
     updatedImageUrls[index] = value;
     setFormData({
       ...formData,
@@ -172,6 +190,16 @@ const CreateSpot = () => {
             placeholder="State"
           />
           {errors.state && <div className="error">{errors.state}</div>}
+        </div>
+        <div>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Name"
+          />
+          {errors.name && <div className="error">{errors.name}</div>}
         </div>
       </section>
 

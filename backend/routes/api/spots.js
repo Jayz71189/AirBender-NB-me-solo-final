@@ -452,10 +452,10 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
 router.post("/", requireAuth, async (req, res) => {
   // Validate body fields before creating the Spot
 
-  let spotId = req.params.spotId;
   const { address, city, state, country, lat, lng, name, description, price } =
     req.body;
 
+  // to do change errors
   if (
     !address ||
     !city ||

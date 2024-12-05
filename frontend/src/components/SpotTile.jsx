@@ -3,9 +3,12 @@ import "./SpotTile.css"; // Add styling for individual tiles
 import { useNavigate } from "react-router-dom";
 
 const SpotTile = ({ spot }) => {
-  const { id, name, city, state, price, previewImage, avgRating } = spot;
+  const { id, name, city, state, price, avgRating, SpotImages } = spot;
 
   const navigate = useNavigate();
+
+  // previewImage =
+  //   spot.SpotImages.find((image) => image.preview)?.url || "default-image.jpg";
 
   if (!spot) {
     return <div>Error: Spot data is undefined</div>;
@@ -15,13 +18,17 @@ const SpotTile = ({ spot }) => {
     navigate(`/spots/${id}`); // Navigate to the spot's detail page
   };
 
+  const thumbnailUrl = SpotImages?.[0]?.url || "placeholder-image-url.jpg";
+
+  console.log(SpotImages);
+
   return (
     <div
       className="spot-tile"
       onClick={handleTileClick}
       style={{ cursor: "pointer" }}
     >
-      <img src={previewImage} alt={name} />
+      <img src={thumbnailUrl} alt={name} />
       <div className="spot-info">
         <h3>{name}</h3>
         <p>{`${city}, ${state}`}</p>

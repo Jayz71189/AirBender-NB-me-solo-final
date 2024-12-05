@@ -1,0 +1,22 @@
+.header {
+  display: flex;
+  justify-content: space-between; /* Distribute space between the logo and the buttons */
+  align-items: center;
+  padding: 1rem;
+  width: 100%;
+}
+
+.logo-img {
+  height: 40px; /* Adjust logo size */
+}
+
+.auth-user {
+  display: flex;
+  gap: 1rem; /* Space between buttons */
+}
+
+@media (max-width: 768px) {
+  .auth-user {
+    display: none; /* Optional: hide auth/user buttons on mobile or adjust them */
+  }
+}

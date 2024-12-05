@@ -12,9 +12,14 @@ function Navigation({ isLoaded }) {
         <NavLink to="/">Home</NavLink>
       </li>
       {sessionUser && (
-        <li>
-          <NavLink to="/spots/new">Create a New Spot</NavLink>
-        </li>
+        <>
+          <li>
+            <NavLink to="/spots/new">Create a New Spot</NavLink>
+          </li>
+          <li>
+            <NavLink to="/spots/manage">Manage Spots</NavLink>
+          </li>
+        </>
       )}
       {isLoaded && (
         <li>

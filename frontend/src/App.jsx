@@ -6,6 +6,9 @@ import * as sessionActions from "./store/session";
 import LandingPage from "./components/LandingPage/LandingPage";
 import SpotDetail from "./components/SpotDetails";
 import CreateSpot from "./components/CreateSpot";
+import ManageSpots from "./components/ManageSpots";
+import UpdateSpot from "./components/SpotUpdate";
+// import Header from "./components/Header/Header";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function Layout() {
@@ -43,9 +46,14 @@ const router = createBrowserRouter([
         element: <CreateSpot />,
       },
       {
+        path: "/spots/:id/edit",
+        element: <UpdateSpot />,
+      },
+      {
         path: "/review/:id",
         element: <h1>Reviews!</h1>,
       },
+      { path: "/spots/manage", element: <ManageSpots /> },
     ],
   },
 ]);

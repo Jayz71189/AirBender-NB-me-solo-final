@@ -88,7 +88,13 @@ const SpotTileManage = ({ spot }) => {
             <dt>price</dt>
             <dd>{price} per night</dd>
           </dl>
-          <button onClick={handleUpdateClick} className={style.button}>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleUpdateClick();
+            }}
+            className={style.button}
+          >
             Update
           </button>
           <button onClick={handleDeleteClick} className={style.button}>
