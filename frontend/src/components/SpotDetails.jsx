@@ -7,6 +7,7 @@ import "./SpotDetails.css";
 const SpotDetail = () => {
   const { id } = useParams();
   const [spot, setSpot] = useState(null);
+  const [error, setError] = useState(false);
   // const [spotImage, setspotImage] = useState;
   const [reviews, setReviews] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
@@ -17,20 +18,35 @@ const SpotDetail = () => {
 
   useEffect(() => {
     const fetchSpotAndReviews = async () => {
-      const [spotResponse, reviewsResponse] = await Promise.all([
-        fetch(`/api/spots/${id}`),
-        fetch(`/api/spots/${id}/reviews`),
-      ]);
+      try {
+        const [spotResponse, reviewsResponse] = await Promise.all([
+          fetch(`/api/spots/${id}`),
+          fetch(`/api/spots/${id}/reviews`),
+        ]);
+        if (!spotResponse.ok) {
+          throw new Error("Spot not found");
+        }
+        const spotData = await spotResponse.json();
+        const reviewsData = await reviewsResponse.json();
 
-      const spotData = await spotResponse.json();
-      const reviewsData = await reviewsResponse.json();
-
-      setSpot(spotData);
-      setReviews(reviewsData.Reviews || []);
+        setSpot(spotData);
+        setReviews(reviewsData.Reviews || []);
+      } catch (err) {
+        setError(true);
+      }
     };
 
     fetchSpotAndReviews();
   }, [id]);
+
+  if (error) {
+    return (
+      <div className="error">
+        <h1>Spot Not Found</h1>
+        <p>The spot you are looking for does not exist.</p>
+      </div>
+    );
+  }
 
   const hasUserReviewed = reviews.some(
     (review) => review.userId === currentUser?.id

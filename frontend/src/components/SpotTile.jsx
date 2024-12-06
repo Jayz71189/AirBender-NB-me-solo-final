@@ -25,6 +25,7 @@ const SpotTile = ({ spot }) => {
   return (
     <div
       className="spot-tile"
+      title={spot.name}
       onClick={handleTileClick}
       style={{ cursor: "pointer" }}
     >
