@@ -5,31 +5,32 @@ import { csrfFetch } from "../store/csrf";
 const CreateSpot = () => {
   const [formData, setFormData] = useState({
     name: "",
-    country: "",
     address: "",
     city: "",
     state: "",
+    country: "",
     lat: 60,
     lng: 170,
     description: "",
     title: "",
     price: "",
-    previewImageUrl: "",
+    previewImage: "",
     imageUrls: ["", "", "", ""],
   });
 
   const [errors, setErrors] = useState({
     name: "",
-    country: "",
+
     address: "",
     city: "",
     state: "",
+    country: "",
     lat: "",
     lng: "",
     description: "",
     title: "",
     price: "",
-    previewImageUrl: "",
+    previewImage: "",
     imageUrls: ["", "", "", ""],
   });
 
@@ -73,8 +74,8 @@ const CreateSpot = () => {
       validationErrors.price = "Price per night is required";
       isValid = false;
     }
-    if (!formData.previewImageUrl) {
-      validationErrors.previewImageUrl = "Preview Image URL is required";
+    if (!formData.previewImage) {
+      validationErrors.previewImage = "Preview Image URL is required";
       isValid = false;
     }
     // Validate Image URLs (optional)
@@ -103,16 +104,29 @@ const CreateSpot = () => {
           body: JSON.stringify(newFormData),
         });
 
-        if (response.ok) {
-          const data = await response.json();
-          const spotId = data.id; // Get the id of the created spot
-
-          // Navigate to the new spot's detail page
-          navigate(`/spots/${spotId}`);
-        } else {
-          const json = await response.json();
-          console.log("json", json);
+        const data = await response.json();
+        if (!response.ok) {
+          throw data;
         }
+
+        const spotId = data.id; // Get the id of the created spot
+
+        const spotImageResponse = await csrfFetch(
+          `/api/spots/${spotId}/images`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ url: formData.previewImage, preview: true }),
+          }
+        );
+        const imageData = await spotImageResponse.json();
+        if (!spotImageResponse.ok) {
+          throw imageData;
+        }
+
+        // Navigate to the new spot's detail page
+
+        navigate(`/spots/${spotId}`);
 
         if (response.status === 403) {
           alert("You must be logged in to create a spot.");
@@ -135,7 +149,7 @@ const CreateSpot = () => {
 
   const handleImageUrlChange = (e, index) => {
     const { value } = e.target;
-    const updatedImageUrls = [...formData.previewImageUrl];
+    const updatedImageUrls = [...formData.previewImage];
     updatedImageUrls[index] = value;
     setFormData({
       ...formData,
@@ -257,13 +271,13 @@ const CreateSpot = () => {
         <p>Submit a link to at least one photo to publish your spot.</p>
         <input
           type="text"
-          name="previewImageUrl"
-          value={formData.previewImageUrl}
+          name="previewImage"
+          value={formData.previewImage}
           onChange={handleChange}
           placeholder="Preview Image URL"
         />
-        {errors.previewImageUrl && (
-          <div className="error">{errors.previewImageUrl}</div>
+        {errors.previewImage && (
+          <div className="error">{errors.previewImage}</div>
         )}
         {formData.imageUrls.map((url, index) => (
           <input

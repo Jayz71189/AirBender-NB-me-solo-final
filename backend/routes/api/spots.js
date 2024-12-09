@@ -104,6 +104,13 @@ router.get("/", validateQuery, async (req, res) => {
     where: filters,
     limit,
     offset,
+    include: [
+      {
+        model: SpotImage,
+        as: "SpotImages",
+        where: { preview: true },
+      },
+    ],
   });
 
   //     const safeUser = {
