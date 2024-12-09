@@ -1,5 +1,7 @@
+import { csrfFetch } from "./csrf";
+
 export const createReview = (spotId, reviewData) => async (dispatch) => {
-  const response = await fetch(`/api/spots/${spotId}/reviews`, {
+  const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(reviewData),
@@ -21,3 +23,5 @@ const addReview = (spotId, review) => ({
 });
 
 // Add logic in your reducer to handle "ADD_REVIEW".
+
+export default createReview;

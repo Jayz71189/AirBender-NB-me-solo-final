@@ -8,6 +8,7 @@ import SpotDetail from "./components/SpotDetails";
 import CreateSpot from "./components/CreateSpot";
 import ManageSpots from "./components/ManageSpots";
 import UpdateSpot from "./components/SpotUpdate";
+import ReviewModal from "./components/ReviewModal";
 // import Header from "./components/Header/Header";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
         element: <h1>Reviews!</h1>,
       },
       { path: "/spots/manage", element: <ManageSpots /> },
+      {
+        path: "/review/",
+        element: <ReviewModal />,
+      },
     ],
   },
 ]);

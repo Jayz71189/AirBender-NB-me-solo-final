@@ -1,27 +1,27 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-// import { ReviewModal } from "./ReviewModal";
+import ReviewModal from "./ReviewModal";
+// import ReviewFormModal from "./ReviewFormModal/ReviewFormModal";
 import "./SpotDetails.css";
+import { csrfFetch } from "../store/csrf";
 
 const SpotDetail = () => {
   const { id } = useParams();
   const [spot, setSpot] = useState(null);
   const [error, setError] = useState(false);
-  // const [spotImage, setspotImage] = useState;
   const [reviews, setReviews] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
   const [comment, setComment] = useState("");
   const [stars, setStars] = useState(0);
   const currentUser = useSelector((state) => state.session.user);
-  // const { name, city, state, country, description, previewImage, Owner } = spot;
 
   useEffect(() => {
     const fetchSpotAndReviews = async () => {
       try {
         const [spotResponse, reviewsResponse] = await Promise.all([
-          fetch(`/api/spots/${id}`),
-          fetch(`/api/spots/${id}/reviews`),
+          csrfFetch(`/api/spots/${id}`),
+          csrfFetch(`/api/spots/${id}/reviews`),
         ]);
         if (!spotResponse.ok) {
           throw new Error("Spot not found");
@@ -51,11 +51,11 @@ const SpotDetail = () => {
   const hasUserReviewed = reviews.some(
     (review) => review.userId === currentUser?.id
   );
-  const isOwner = spot?.Owner?.id === currentUser?.id;
+  const isOwner = spot?.ownerId === currentUser?.id;
 
   const handleSubmitReview = async () => {
     try {
-      const response = await fetch(`/api/spots/${id}/reviews`, {
+      const response = await csrfFetch(`/api/spots/${id}/reviews`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -179,7 +179,9 @@ const SpotDetail = () => {
 
       {/* Show "Post Your Review" button if conditions are met */}
       {currentUser && !hasUserReviewed && !isOwner && (
-        <button onClick={() => setIsModalOpen(true)}>Post Your Review</button>
+        <button className="post-button" onClick={() => setIsModalOpen(true)}>
+          Post Your Review
+        </button>
       )}
 
       {/* Review List */}
@@ -202,34 +204,15 @@ const SpotDetail = () => {
 
       {/* Review Modal */}
       {isModalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>How was your stay?</h2>
-            <textarea
-              placeholder="Leave your review here..."
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-            ></textarea>
-            <div>
-              <label>Stars</label>
-              <input
-                type="number"
-                min="1"
-                max="5"
-                value={stars}
-                onChange={(e) => setStars(Number(e.target.value))}
-              />
-            </div>
-            <button
-              onClick={handleSubmitReview}
-              disabled={comment.length < 10 || stars < 1}
-            >
-              Submit Your Review
-            </button>
-            <button onClick={() => setIsModalOpen(false)}>Cancel</button>
-            {/* <ReviewModal></ReviewModal> */}
-          </div>
-        </div>
+        <ReviewModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          comment={comment}
+          setComment={setComment}
+          stars={stars}
+          setStars={setStars}
+          onSubmit={handleSubmitReview}
+        />
       )}
     </div>
   );

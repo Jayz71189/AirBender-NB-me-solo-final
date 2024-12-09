@@ -15,7 +15,7 @@ module.exports = {
         {
           id: 1,
           spotId: 1, // Assuming the spot ID is 1
-          url: "https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600",
+          url: "https://a0.muscache.com/im/pictures/miso/Hosting-21409981/original/a8fa243d-dac8-4238-93e5-f7aa33072ff8.jpeg?im_w=1200&im_format=avif",
           preview: true, // Marked as preview image
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -23,15 +23,15 @@ module.exports = {
         {
           id: 2,
           spotId: 2, // Assuming the spot ID is 2
-          url: "https://celebrationspress.com/wp-content/uploads/2017/10/102317Tigger.png",
-          preview: false, // Not marked as preview
+          url: "https://a0.muscache.com/im/pictures/13507508/edc9eb7f_original.jpg?im_w=1200&im_format=avif",
+          preview: true, // Not marked as preview
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           id: 3,
           spotId: 3, // Assuming the spot ID is 3
-          url: "https://static.wikia.nocookie.net/disney/images/5/5d/Profile_-_Piglet.png/revision/latest?cb=20190424074931",
+          url: "https://a0.muscache.com/im/pictures/miso/Hosting-313113/original/db974e45-6bfb-437d-ab51-8ecaba1f4ee0.jpeg?im_w=1200&im_format=avif",
           preview: true, // Marked as preview image
           createdAt: new Date(),
           updatedAt: new Date(),
