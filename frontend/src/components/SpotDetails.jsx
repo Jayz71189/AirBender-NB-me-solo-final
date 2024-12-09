@@ -7,7 +7,7 @@ import "./SpotDetails.css";
 import { csrfFetch } from "../store/csrf";
 
 const SpotDetail = () => {
-  const { id } = useParams();
+  const { spotId } = useParams();
   const [spot, setSpot] = useState(null);
   const [error, setError] = useState(false);
   const [reviews, setReviews] = useState([]);
@@ -20,8 +20,8 @@ const SpotDetail = () => {
     const fetchSpotAndReviews = async () => {
       try {
         const [spotResponse, reviewsResponse] = await Promise.all([
-          csrfFetch(`/api/spots/${id}`),
-          csrfFetch(`/api/spots/${id}/reviews`),
+          csrfFetch(`/api/spots/${spotId}`),
+          csrfFetch(`/api/spots/${spotId}/reviews`),
         ]);
         if (!spotResponse.ok) {
           throw new Error("Spot not found");
@@ -37,7 +37,7 @@ const SpotDetail = () => {
     };
 
     fetchSpotAndReviews();
-  }, [id]);
+  }, [spotId]);
 
   if (error) {
     return (
@@ -55,7 +55,7 @@ const SpotDetail = () => {
 
   const handleSubmitReview = async () => {
     try {
-      const response = await csrfFetch(`/api/spots/${id}/reviews`, {
+      const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
