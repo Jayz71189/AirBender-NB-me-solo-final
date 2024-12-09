@@ -37,6 +37,56 @@ const UpdateSpot = () => {
     imageUrls: ["", "", "", ""],
   });
 
+  // useEffect(() => {
+  //   // Fetch the spot data using the spotId
+  //   const fetchSpot = async () => {
+  //     const response = await fetch(`/api/spots/${spotId}`);
+  //     const data = await response.json();
+  //     setSpot(data);
+  //     setFormData({
+  //       name: data.name,
+  //       description: data.description,
+  //       price: data.price,
+  //       city: data.city,
+  //       state: data.state,
+  //       country: data.country,
+  //       imageUrl: data.imageUrl || "", // Handle optional imageUrl
+  //     });
+  //   };
+
+  //   fetchSpot();
+  // }, [spotId]);
+
+  // Fetch current spot data
+  useEffect(() => {
+    const fetchSpot = async () => {
+      try {
+        const response = await csrfFetch(`/api/spots/${spotId}`);
+        if (!response.ok) throw new Error("Failed to fetch spot details");
+        const spotData = await response.json();
+
+        setFormData({
+          name: spotData.name || "",
+          address: spotData.address || "",
+          city: spotData.city || "",
+          state: spotData.state || "",
+          country: spotData.country || "",
+          lat: spotData.lat || 60,
+          lng: spotData.lng || 170,
+          description: spotData.description || "",
+          title: spotData.title || "",
+          price: spotData.price || "",
+          previewImage: spotData.previewImage || "",
+          imageUrls: spotData.imageUrls || ["", "", "", ""],
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchSpot();
+  }, [spotId]);
+
   // Validation function
   const validateForm = () => {
     let validationErrors = {};
@@ -72,7 +122,7 @@ const UpdateSpot = () => {
       isValid = false;
     }
     if (!formData.previewImage) {
-      validationErrors.previewImageUrl = "Preview Image URL is required";
+      validationErrors.previewImage = "Preview Image URL is required";
       isValid = false;
     }
     // Validate Image URLs (optional)
@@ -87,89 +137,55 @@ const UpdateSpot = () => {
     return isValid;
   };
 
-  // useEffect(() => {
-  //   // Fetch the spot data using the spotId
-  //   const fetchSpot = async () => {
-  //     const response = await fetch(`/api/spots/${spotId}`);
-  //     const data = await response.json();
-  //     setSpot(data);
-  //     setFormData({
-  //       name: data.name,
-  //       description: data.description,
-  //       price: data.price,
-  //       city: data.city,
-  //       state: data.state,
-  //       country: data.country,
-  //       imageUrl: data.imageUrl || "", // Handle optional imageUrl
-  //     });
-  //   };
-
-  //   fetchSpot();
-  // }, [spotId]);
-
-  // Fetch current spot data
-  useEffect(() => {
-    const fetchSpot = async () => {
-      const response = await csrfFetch(`/api/spots/${spotId}`);
-      const spotData = await response.json();
-      setFormData({
-        name: spotData.name,
-        location: `${spotData.city}, ${spotData.state}, ${spotData.country}`,
-        price: spotData.price,
-        description: spotData.description,
-        imageUrls: spotData.imageUrls || [],
-      });
-    };
-    fetchSpot();
-  }, [spotId]);
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleImageUrlChange = (e, index) => {
+    const { value } = e.target;
+    const updatedImageUrls = [...formData.imageUrls];
+    updatedImageUrls[index] = value;
+    setFormData({ ...formData, imageUrls: updatedImageUrls });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      // Proceed with form submission logic (e.g., API request)
-      try {
-        // Sending form data to backend to create a new spot
-        const newFormData = { ...formData };
-        newFormData.price = Number(newFormData.price);
-        const response = await csrfFetch(`/api/spots/${spotId}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(newFormData),
-        });
+    if (!validateForm()) return;
 
-        const data = await response.json();
-        if (!response.ok) {
-          throw data;
-        }
-
-        const spotId = data.id; // Get the id of the created spot
-
-        const spotImageResponse = await csrfFetch(
-          `/api/spots/${spotId}/images`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ url: formData.previewImage, preview: true }),
-          }
-        );
-        const imageData = await spotImageResponse.json();
-        if (!spotImageResponse.ok) {
-          throw imageData;
-        }
-        navigate(`/spots/${spotId}`);
-
-        if (response.status === 403) {
-          alert("You must be logged in to create a spot.");
-        } else {
-          console.error("Error creating spot");
-        }
-      } catch (error) {
-        console.error("Error:", error);
+    try {
+      const newFormData = { ...formData };
+      newFormData.price = Number(newFormData.price);
+      const response = await csrfFetch(`/api/spots/${spotId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newFormData),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw errorData;
       }
+      const updatedSpot = await response.json();
+      if (!response.ok) {
+        throw updatedSpot;
+      }
+      const updatedSpotId = updatedSpot.id; // Get the id of the created spot
+
+      const spotImageResponse = await csrfFetch(
+        `/api/spots/${updatedSpotId}/images`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url: formData.previewImage, preview: true }),
+        }
+      );
+      const imageData = await spotImageResponse.json();
+      if (!spotImageResponse.ok) {
+        throw imageData;
+      }
+      navigate(`/spots/${updatedSpot.id}`);
+    } catch (err) {
+      console.error("Error updating spot:", err);
+      setErrors({ general: "Failed to update the spot. Please try again." });
     }
   };
 
@@ -210,15 +226,15 @@ const UpdateSpot = () => {
 
   // if (!spot) return <p>Loading...</p>;
 
-  const handleImageUrlChange = (e, index) => {
-    const { value } = e.target;
-    const updatedImageUrls = [...formData.previewImage];
-    updatedImageUrls[index] = value;
-    setFormData({
-      ...formData,
-      imageUrls: updatedImageUrls,
-    });
-  };
+  // const handleImageUrlChange = (e, index) => {
+  //   const { value } = e.target;
+  //   const updatedImageUrls = [...formData.previewImage];
+  //   updatedImageUrls[index] = value;
+  //   setFormData({
+  //     ...formData,
+  //     imageUrls: updatedImageUrls,
+  //   });
+  // };
 
   return (
     <form onSubmit={handleSubmit}>

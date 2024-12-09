@@ -49,7 +49,8 @@ function ReviewModal({ spotId, onClose }) {
     }
 
     try {
-      await dispatch(createReview({ spotId, review, stars: parsedStars }));
+      const reviewData = { review, stars: parsedStars };
+      await dispatch(createReview({ spotId, reviewData }));
       onClose();
     } catch (err) {
       setError("An error occurred while submitting your review.");
