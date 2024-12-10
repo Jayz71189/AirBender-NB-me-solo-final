@@ -93,7 +93,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       description: {
-        type: DataTypes.CHAR,
+        type: DataTypes.TEXT,
         allowNull: false,
         validate: {
           notEmpty: { msg: "Description is required" },

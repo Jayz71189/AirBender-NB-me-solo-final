@@ -50,7 +50,7 @@ module.exports = {
           allowNull: false,
         },
         description: {
-          type: Sequelize.STRING(50),
+          type: Sequelize.TEXT,
           allowNull: false,
         },
         price: {
