@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import SpotTile from "../SpotTile";
 import "./LandingPage.css"; // Add styling for layout
+import { csrfFetch } from "../../store/csrf";
 
 const LandingPage = () => {
   const [spots, setSpots] = useState([]);
@@ -17,9 +18,9 @@ const LandingPage = () => {
           const spotsWithImages = await Promise.all(
             data.Spots.map(async (spot) => {
               try {
-                const imageResponse = await fetch(
-                  `/api/spots/${spot.id}/images`
-                );
+                console.log("spot");
+                console.log(spot);
+                const imageResponse = await csrfFetch(`/api/spots/${spot.id}`);
                 const images = await imageResponse.json();
 
                 // Check if 'SpotImages' is an array before using .find()
