@@ -32,8 +32,8 @@ const SpotTileManage = ({ spot }) => {
     ratings.length === 0
       ? "new"
       : (
-          ratings.reduce((result, rating) => result + rating, 0) /
-          ratings.length
+          Number(ratings).reduce((result, rating) => result + rating, 0) /
+          Number(ratings).length
         ).toFixed(1);
 
   const image = imageUrl ? (

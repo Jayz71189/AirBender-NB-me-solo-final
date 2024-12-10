@@ -41,7 +41,7 @@ const SpotTile = ({ spot }) => {
             <i className="fa fa-star" aria-hidden="true"></i>{" "}
             {avgRating === null
               ? "New"
-              : `${parseFloat(avgRating).toFixed(1)} stars`}
+              : `${parseFloat(Number(avgRating)).toFixed(1)} stars`}
           </div>
         </p>
       </div>

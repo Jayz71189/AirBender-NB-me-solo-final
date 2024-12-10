@@ -108,7 +108,7 @@ const SpotDetail = () => {
     }
     return (
       <div>
-        <span className="fa fa-star"></span> {avgRating.toFixed(1)} (
+        <span className="fa fa-star"></span> {Number(avgRating).toFixed(1)} (
         {reviewCount} reviews)
       </div>
     );

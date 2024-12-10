@@ -239,7 +239,7 @@ router.get("/:spotId", async (req, res) => {
       ...spot.toJSON(),
       numReviews,
       avgStarRating: avgStarRating
-        ? parseFloat(avgStarRating).toFixed(1)
+        ? parseFloat(Number(avgStarRating)).toFixed(1)
         : null,
     };
 
