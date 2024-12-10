@@ -17,6 +17,8 @@ function ReviewModal({ spotId, onClose }) {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
+        console.log("spotId");
+        console.log(spotId);
         const [reviewsResponse] = await Promise.all([
           csrfFetch(`/api/spots/${spotId}/reviews`),
         ]);
@@ -50,7 +52,7 @@ function ReviewModal({ spotId, onClose }) {
 
     try {
       const reviewData = { review, stars: parsedStars };
-      await dispatch(createReview({ spotId, reviewData }));
+      await dispatch(createReview(spotId, reviewData));
       onClose();
     } catch (err) {
       setError("An error occurred while submitting your review.");

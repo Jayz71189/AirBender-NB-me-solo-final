@@ -119,7 +119,10 @@ const SpotDetail = () => {
     "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEzMTA4NjI3OTI1MjIxNDQyOA%3D%3D/original/bc989f2d-eca8-4bcf-a9b0-b70b8e685a64.jpeg?im_w=2560&im_q=highq&im_format=avif"; // Replace with your placeholder URL
   const displayedImages = Array.isArray(previewImage) ? previewImage : []; // Ensure `images` is an array
 
-  // console.log(SpotImages);
+  console.log("SpotImages");
+  console.log(SpotImages);
+  console.log("spot");
+  console.log(spot);
 
   return (
     <div className="spot-detail-container">
@@ -132,7 +135,7 @@ const SpotDetail = () => {
           <img
             className="large-image"
             // src={displayedImages[0] || defaultImage} // Use default image if none is providedalt="Large Spot" />
-            src={SpotImages[0].url}
+            src={SpotImages.at(-1).url}
             alt="Large Spot"
           />
           <div className="small-images">
@@ -210,6 +213,7 @@ const SpotDetail = () => {
           comment={comment}
           setComment={setComment}
           stars={stars}
+          spotId={spotId}
           setStars={setStars}
           onSubmit={handleSubmitReview}
         />

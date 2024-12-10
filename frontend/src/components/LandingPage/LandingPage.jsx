@@ -18,7 +18,7 @@ const LandingPage = () => {
             data.Spots.map(async (spot) => {
               try {
                 const imageResponse = await fetch(
-                  `/api/spots/${spot.id}/images/`
+                  `/api/spots/${spot.id}/images`
                 );
                 const images = await imageResponse.json();
 

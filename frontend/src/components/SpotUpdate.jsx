@@ -169,7 +169,6 @@ const UpdateSpot = () => {
         throw updatedSpot;
       }
       const updatedSpotId = updatedSpot.id; // Get the id of the created spot
-      console.log("a");
       const spotImageResponse = await csrfFetch(
         `/api/spots/${updatedSpotId}/images`,
         {
@@ -182,7 +181,7 @@ const UpdateSpot = () => {
       if (!spotImageResponse.ok) {
         throw imageData;
       }
-      console.log("b");
+
       navigate(`/spots/${updatedSpot.id}`);
     } catch (err) {
       console.error("Error updating spot:", err);

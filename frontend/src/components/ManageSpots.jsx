@@ -68,7 +68,7 @@ const ManageSpots = () => {
             >
               <img
                 src={
-                  spot.SpotImages?.[0]?.url ||
+                  spot.SpotImages?.at(-1).url ||
                   "https://a0.muscache.com/im/pictures/miso/Hosting-21409981/original/a8fa243d-dac8-4238-93e5-f7aa33072ff8.jpeg?im_w=1200&im_format=avif"
                 }
                 alt={spot.name}
