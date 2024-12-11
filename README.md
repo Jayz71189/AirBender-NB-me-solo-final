@@ -1,7 +1,5 @@
 # `AirBenderNB`
 
-# `I'll BrB\*\*
-
 ## quickstart
 
 1. start backend
