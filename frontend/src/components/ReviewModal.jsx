@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { csrfFetch } from "../store/csrf";
 import { createReview } from "../store/review";
+import { useModal } from "../context/Modal";
 // import ConfirmationModal from "./ConfirmationModal";
 
-function ReviewModal({ spotId, onClose }) {
+function ReviewModal({ spotId }) {
   const dispatch = useDispatch();
   const loggedInUserId = useSelector((state) => state.session.user?.id);
+  const { closeModal } = useModal();
   const [reviews, setReviews] = useState([]);
   const [review, setReview] = useState("");
   const [stars, setStars] = useState(0);
@@ -53,7 +55,8 @@ function ReviewModal({ spotId, onClose }) {
     try {
       const reviewData = { review, stars: parsedStars };
       await dispatch(createReview(spotId, reviewData));
-      onClose();
+      // onClose();
+      closeModal();
     } catch (err) {
       setError("An error occurred while submitting your review.");
     }
@@ -120,7 +123,7 @@ function ReviewModal({ spotId, onClose }) {
           Submit Your Review
         </button>
       </form>
-      <button onClick={onClose} className="close-modal">
+      <button onClick={closeModal} className="close-modal">
         Close
       </button>
 
@@ -129,8 +132,12 @@ function ReviewModal({ spotId, onClose }) {
           <div key={review.id} className="review-item">
             <p>{review.comment}</p>
             <p>Stars: {review.stars}</p>
+            {/* Show the "Delete" button only for reviews posted by the logged-in user */}
             {review.userId === loggedInUserId && (
-              <button onClick={() => handleDeleteClick(review.id)}>
+              <button
+                onClick={() => handleDeleteClick(review.id)}
+                className="delete-review-button"
+              >
                 Delete
               </button>
             )}

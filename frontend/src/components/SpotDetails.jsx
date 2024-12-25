@@ -2,9 +2,11 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ReviewModal from "./ReviewModal";
+import OpenModalButton from "./OpenModalButton/OpenModalButton";
 // import ReviewFormModal from "./ReviewFormModal/ReviewFormModal";
 import "./SpotDetails.css";
 import { csrfFetch } from "../store/csrf";
+// import { useModal } from "../context/Modal";
 
 const SpotDetail = () => {
   const { spotId } = useParams();
@@ -182,9 +184,11 @@ const SpotDetail = () => {
 
       {/* Show "Post Your Review" button if conditions are met */}
       {currentUser && !hasUserReviewed && !isOwner && (
-        <button className="post-button" onClick={() => setIsModalOpen(true)}>
-          Post Your Review
-        </button>
+        <OpenModalButton
+          buttonText="Post Your Review"
+          modalComponent={<ReviewModal spotId={spotId} />}
+          className="post-button"
+        />
       )}
 
       {/* Review List */}
@@ -197,9 +201,19 @@ const SpotDetail = () => {
             <div key={review.id} className="review">
               <p>
                 <strong>{review.User?.firstName || "Anonymous"}</strong>:{" "}
-                {review.comment}
+                {review.review}
               </p>
               <p>⭐ {review.stars}</p>
+
+              {/* Show "Delete" button if the review belongs to the logged-in user */}
+              {currentUser?.id === review.userId && !isOwner && (
+                <OpenModalButton
+                  buttonText="Delete"
+                  className="delete-review-button"
+                  modalComponent={<ReviewModal reviewId={review} />}
+                  // onClick={() => handleDeleteClick(review.id)} // Pass the review's id to handle deletion
+                />
+              )}
             </div>
           ))
         )}
