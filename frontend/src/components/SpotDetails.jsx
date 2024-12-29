@@ -6,6 +6,7 @@ import OpenModalButton from "./OpenModalButton/OpenModalButton";
 // import ReviewFormModal from "./ReviewFormModal/ReviewFormModal";
 import "./SpotDetails.css";
 import { csrfFetch } from "../store/csrf";
+import ReviewActions from "./ReviewActions";
 // import { useModal } from "../context/Modal";
 
 const SpotDetail = () => {
@@ -14,6 +15,7 @@ const SpotDetail = () => {
   const [error, setError] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
+  const [hasPostedReview, setHasPostedReview] = useState(false);
   const [comment, setComment] = useState("");
   const [stars, setStars] = useState(0);
   const currentUser = useSelector((state) => state.session.user);
@@ -50,9 +52,10 @@ const SpotDetail = () => {
     );
   }
 
-  const hasUserReviewed = reviews.some(
-    (review) => review.userId === currentUser?.id
-  );
+  const hasUserReviewed =
+    hasPostedReview ||
+    reviews.some((review) => review.userId === currentUser?.id);
+
   const isOwner = spot?.ownerId === currentUser?.id;
 
   const handleSubmitReview = async () => {
@@ -68,6 +71,7 @@ const SpotDetail = () => {
       if (response.ok) {
         const newReview = await response.json();
         setReviews([newReview, ...reviews]); // Add new review to the top of the list
+        setHasPostedReview(true); // Update state
         setSpot((prev) => ({
           ...prev,
           avgStarRating:
@@ -186,7 +190,9 @@ const SpotDetail = () => {
       {currentUser && !hasUserReviewed && !isOwner && (
         <OpenModalButton
           buttonText="Post Your Review"
-          modalComponent={<ReviewModal spotId={spotId} />}
+          modalComponent={
+            <ReviewModal spotId={spotId} onSubmit={handleSubmitReview} />
+          }
           className="post-button"
         />
       )}
@@ -205,13 +211,16 @@ const SpotDetail = () => {
               </p>
               <p>⭐ {review.stars}</p>
 
-              {/* Show "Delete" button if the review belongs to the logged-in user */}
+              {/* Show "Delete" button if the review belongs to the logged-in user and Call ReviewActions for each review */}
               {currentUser?.id === review.userId && !isOwner && (
-                <OpenModalButton
-                  buttonText="Delete"
-                  className="delete-review-button"
-                  modalComponent={<ReviewModal reviewId={review} />}
-                  // onClick={() => handleDeleteClick(review.id)} // Pass the review's id to handle deletion
+                <ReviewActions
+                  review={review}
+                  currentUser={currentUser}
+                  onDelete={(deletedReviewId) =>
+                    setReviews((prev) =>
+                      prev.filter((rev) => rev.id !== deletedReviewId)
+                    )
+                  }
                 />
               )}
             </div>

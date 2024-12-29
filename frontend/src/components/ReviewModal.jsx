@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { csrfFetch } from "../store/csrf";
 import { createReview } from "../store/review";
 import { useModal } from "../context/Modal";
@@ -7,14 +7,14 @@ import { useModal } from "../context/Modal";
 
 function ReviewModal({ spotId }) {
   const dispatch = useDispatch();
-  const loggedInUserId = useSelector((state) => state.session.user?.id);
+  // const loggedInUserId = useSelector((state) => state.session.user?.id);
   const { closeModal } = useModal();
   const [reviews, setReviews] = useState([]);
   const [review, setReview] = useState("");
   const [stars, setStars] = useState(0);
   const [error, setError] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const [reviewToDelete, setReviewToDelete] = useState(null);
+  // const [showModal, setShowModal] = useState(false);
+  // const [reviewToDelete, setReviewToDelete] = useState(null);
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -62,22 +62,22 @@ function ReviewModal({ spotId }) {
     }
   };
 
-  const handleDeleteClick = (reviewId) => {
-    setReviewToDelete(reviewId);
-    setShowModal(true);
-  };
+  // const handleDeleteClick = (reviewId) => {
+  //   setReviewToDelete(reviewId);
+  //   setShowModal(true);
+  // };
 
-  const handleConfirmDelete = async () => {
-    try {
-      await csrfFetch(`/api/reviews/${reviewToDelete}`, { method: "DELETE" });
-      setReviews((prevReviews) =>
-        prevReviews.filter((review) => review.id !== reviewToDelete)
-      );
-      setShowModal(false); // Close the modal after deleting
-    } catch (error) {
-      console.error("Error deleting review:", error);
-    }
-  };
+  // const handleConfirmDelete = async () => {
+  //   try {
+  //     await csrfFetch(`/api/reviews/${reviewToDelete}`, { method: "DELETE" });
+  //     setReviews((prevReviews) =>
+  //       prevReviews.filter((review) => review.id !== reviewToDelete)
+  //     );
+  //     setShowModal(false); // Close the modal after deleting
+  //   } catch (error) {
+  //     console.error("Error deleting review:", error);
+  //   }
+  // };
 
   //   const handleDeleteReview = async (reviewId) => {
   //     // Simulate an API call
@@ -93,9 +93,9 @@ function ReviewModal({ spotId }) {
   //     }
   //   };
 
-  const handleCancelDelete = () => {
-    setShowModal(false); // Close the modal without deleting
-  };
+  // const handleCancelDelete = () => {
+  //   setShowModal(false); // Close the modal without deleting
+  // };
 
   console.log("Stars value:", stars);
 
@@ -119,7 +119,10 @@ function ReviewModal({ spotId }) {
             onChange={(e) => setStars(Number(e.target.value))}
           />
         </label>
-        <button type="submit" disabled={review.length < 10 || stars === 0}>
+        <button
+          onClick={handleSubmit}
+          disabled={review.length < 10 || stars === 0}
+        >
           Submit Your Review
         </button>
       </form>
@@ -133,18 +136,18 @@ function ReviewModal({ spotId }) {
             <p>{review.comment}</p>
             <p>Stars: {review.stars}</p>
             {/* Show the "Delete" button only for reviews posted by the logged-in user */}
-            {review.userId === loggedInUserId && (
+            {/* {review.userId === loggedInUserId && (
               <button
                 onClick={() => handleDeleteClick(review.id)}
                 className="delete-review-button"
               >
                 Delete
               </button>
-            )}
+            )} */}
           </div>
         ))}
       </div>
-
+      {/* 
       {showModal && (
         <div className="confirmation-modal">
           <div className="modal-content">
@@ -158,7 +161,7 @@ function ReviewModal({ spotId }) {
             </button>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
