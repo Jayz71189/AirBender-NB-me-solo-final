@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { csrfFetch } from "../store/csrf";
+import "./CreateSpot.css";
 
 const CreateSpot = () => {
   const [formData, setFormData] = useState({
