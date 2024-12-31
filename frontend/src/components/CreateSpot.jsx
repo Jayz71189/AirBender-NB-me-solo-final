@@ -291,7 +291,7 @@ const CreateSpot = () => {
         ))}
       </section>
 
-      <button type="submit">Submit</button>
+      <button type="submit">Create Spot</button>
     </form>
   );
 };

@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./ManageSpots.css";
 import { csrfFetch } from "../store/csrf";
+import DeleteSpotModal from "./DeleteSpot";
+import OpenModalButton from "./OpenModalButton/OpenModalButton";
 
 const ManageSpots = () => {
   const [spots, setSpots] = useState([]);
@@ -15,7 +17,7 @@ const ManageSpots = () => {
 
   useEffect(() => {
     const fetchSpots = async () => {
-      const response = await fetch("/api/spots/current");
+      const response = await csrfFetch("/api/spots/current");
       const data = await response.json();
       setSpots(data.Spots || []);
     };
@@ -90,7 +92,22 @@ const ManageSpots = () => {
                 >
                   Update
                 </button>
-                <button onClick={() => handleDelete(spot.id)}>Delete</button>
+                {/* <button onClick={() => handleDelete(spot.id)}>Delete</button>
+                <OpenModalButton
+                  buttonText="Delete"
+                  modalComponent={<DeleteSpotModal spotId={spot} />}
+                  className="post-button"
+                /> */}
+                <OpenModalButton
+                  buttonText="Delete"
+                  modalComponent={
+                    <DeleteSpotModal
+                      spotId={spot.id}
+                      onConfirm={() => handleDelete(spot.id)}
+                    />
+                  }
+                  className="post-button"
+                />
               </div>
             </div>
           ))}

@@ -2,27 +2,27 @@ import { csrfFetch } from "../store/csrf";
 import { useModal } from "../context/Modal";
 import "./DeleteReviewModal.css";
 
-const DeleteReviewModal = ({ reviewId, onDelete }) => {
+const DeleteSpotModal = ({ spotId, onDelete }) => {
   const { closeModal } = useModal();
   const handleDelete = async () => {
     try {
-      const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+      const response = await csrfFetch(`/api/spots/${spotId}`, {
         method: "DELETE",
       });
       if (response.ok) {
-        onDelete(reviewId);
+        onDelete(spotId);
       } else {
-        alert("Failed to delete review");
+        alert("Failed to delete spot");
       }
     } catch (err) {
-      console.error("Error deleting review:", err);
+      console.error("Error deleting spot:", err);
     }
   };
 
   return (
-    <div className="delete-review-modal">
+    <div className="delete-spot-modal">
       <h2>Confirm Delete</h2>
-      <p>Are you sure you want to delete this review?</p>
+      <p>Are you sure you want to delete this spot?</p>
       <button
         className="confirm-button"
         onClick={() => {
@@ -30,13 +30,13 @@ const DeleteReviewModal = ({ reviewId, onDelete }) => {
           closeModal();
         }}
       >
-        Yes (Delete Review)
+        Yes (Delete Spot)
       </button>
       <button onClick={closeModal} className="cancel-button">
-        No (Keep Review)
+        No (Keep Spot)
       </button>
     </div>
   );
 };
 
-export default DeleteReviewModal;
+export default DeleteSpotModal;

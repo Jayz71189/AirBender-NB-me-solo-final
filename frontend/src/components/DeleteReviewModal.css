@@ -1,0 +1,61 @@
+.delete-review-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  width: 400px;
+  max-width: 90%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.delete-review-modal h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.delete-review-modal p {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.confirm-button,
+.cancel-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.confirm-button {
+  background-color: #f44336; /* Red for delete */
+  color: #fff;
+  margin-right: 10px;
+}
+
+.confirm-button:hover {
+  background-color: #d32f2f;
+}
+
+.cancel-button {
+  background-color: #757575; /* Grey for cancel */
+  color: #fff;
+}
+
+.cancel-button:hover {
+  background-color: #616161;
+}
+
+.confirm-button:active,
+.cancel-button:active {
+  transform: scale(0.98);
+}
