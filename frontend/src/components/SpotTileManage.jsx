@@ -93,11 +93,14 @@ const SpotTileManage = ({ spot }) => {
               e.stopPropagation();
               handleUpdateClick();
             }}
-            className={style.button}
+            className={`${style.button} update`}
           >
             Update
           </button>
-          <button onClick={handleDeleteClick} className={style.button}>
+          <button
+            onClick={handleDeleteClick}
+            className={`${style.button} delete`}
+          >
             Delete
           </button>
         </div>

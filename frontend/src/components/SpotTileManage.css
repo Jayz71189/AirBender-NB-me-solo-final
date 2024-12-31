@@ -83,3 +83,25 @@
   cursor: pointer;
   transition: all 0.1s ease-in-out;
 }
+
+/* Update button specific styles */
+.button.update {
+  background-color: #4caf50; /* Green */
+  color: white;
+}
+
+.button.update:hover {
+  background-color: #45a049;
+  border-color: #3e8e41;
+}
+
+/* Delete button specific styles */
+.button.delete {
+  background-color: #f44336; /* Red */
+  color: white;
+}
+
+.button.delete:hover {
+  background-color: #d32f2f;
+  border-color: #b71c1c;
+}

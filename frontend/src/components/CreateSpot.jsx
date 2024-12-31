@@ -5,7 +5,7 @@ import "./CreateSpot.css";
 
 const CreateSpot = () => {
   const [formData, setFormData] = useState({
-    name: "",
+    // name: "",
     address: "",
     city: "",
     state: "",
@@ -13,15 +13,14 @@ const CreateSpot = () => {
     lat: 60,
     lng: 170,
     description: "",
-    title: "",
+    name: "",
     price: "",
     previewImage: "",
     imageUrls: ["", "", "", ""],
   });
 
   const [errors, setErrors] = useState({
-    name: "",
-
+    // name: "",
     address: "",
     city: "",
     state: "",
@@ -29,7 +28,7 @@ const CreateSpot = () => {
     lat: "",
     lng: "",
     description: "",
-    title: "",
+    name: "",
     price: "",
     previewImage: "",
     imageUrls: ["", "", "", ""],
@@ -63,14 +62,14 @@ const CreateSpot = () => {
       validationErrors.description = "Description needs at least 30 characters";
       isValid = false;
     }
-    if (!formData.title) {
-      validationErrors.title = "Title is required";
-      isValid = false;
-    }
     if (!formData.name) {
-      validationErrors.title = "Name is required";
+      validationErrors.name = "Title is required";
       isValid = false;
     }
+    // if (!formData.name) {
+    //   validationErrors.title = "Name is required";
+    //   isValid = false;
+    // }
     if (!formData.price) {
       validationErrors.price = "Price per night is required";
       isValid = false;
@@ -160,6 +159,7 @@ const CreateSpot = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <div className="create-spot">Create a New Spot</div>
       <section>
         <h2>Where&apos;s your place located?</h2>
         <p>
@@ -206,7 +206,7 @@ const CreateSpot = () => {
           />
           {errors.state && <div className="error">{errors.state}</div>}
         </div>
-        <div>
+        {/* <div>
           <input
             type="text"
             name="name"
@@ -215,7 +215,7 @@ const CreateSpot = () => {
             placeholder="Name"
           />
           {errors.name && <div className="error">{errors.name}</div>}
-        </div>
+        </div> */}
       </section>
 
       <section>
@@ -243,8 +243,8 @@ const CreateSpot = () => {
         </p>
         <input
           type="text"
-          name="title"
-          value={formData.title}
+          name="name"
+          value={formData.name}
           onChange={handleChange}
           placeholder="Name of your spot"
         />

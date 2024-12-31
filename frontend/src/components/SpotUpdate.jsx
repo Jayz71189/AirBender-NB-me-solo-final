@@ -7,7 +7,7 @@ const UpdateSpot = () => {
   const { spotId } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: "",
+    // name: "",
     address: "",
     city: "",
     state: "",
@@ -22,8 +22,7 @@ const UpdateSpot = () => {
   });
 
   const [errors, setErrors] = useState({
-    name: "",
-
+    // name: "",
     address: "",
     city: "",
     state: "",
@@ -74,7 +73,7 @@ const UpdateSpot = () => {
           lat: spotData.lat || 60,
           lng: spotData.lng || 170,
           description: spotData.description || "",
-          title: spotData.title || "",
+          title: spotData.title || spotData.name || "",
           price: spotData.price || "",
           previewImage: spotData.previewImage || "",
           imageUrls: spotData.imageUrls || ["", "", "", ""],
@@ -238,6 +237,7 @@ const UpdateSpot = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <div className="update-spot">Update a New Spot</div>
       <section>
         <h2>Where&apos;s your place located?</h2>
         <p>
@@ -284,7 +284,7 @@ const UpdateSpot = () => {
           />
           {errors.state && <div className="error">{errors.state}</div>}
         </div>
-        <div>
+        {/* <div>
           <input
             type="text"
             name="name"
@@ -293,7 +293,7 @@ const UpdateSpot = () => {
             placeholder="Name"
           />
           {errors.name && <div className="error">{errors.name}</div>}
-        </div>
+        </div> */}
       </section>
 
       <section>
