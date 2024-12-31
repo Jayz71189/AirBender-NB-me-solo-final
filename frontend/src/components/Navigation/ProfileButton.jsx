@@ -18,7 +18,7 @@ function ProfileButton({ user }) {
   const toggleMenu = (e) => {
     e.stopPropagation(); // Keep click from bubbling up to document and triggering closeMenu
     // if (!showMenu) setShowMenu(true);
-    setShowMenu(!showMenu);
+    setShowMenu((prevState) => !prevState);
   };
 
   useEffect(() => {
@@ -49,6 +49,7 @@ function ProfileButton({ user }) {
         </Link>
       </div>
       <button onClick={toggleMenu}>
+        {showMenu && user.username}
         <FaUserCircle />
       </button>
       <ul className={dropDownClassName} ref={dropDownMenu}>

@@ -11,6 +11,7 @@ import UpdateSpot from "./components/SpotUpdate";
 import ReviewModal from "./components/ReviewModal";
 // import Header from "./components/Header/Header";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import TestModal from "./components/test";
 
 function Layout() {
   const dispatch = useDispatch();
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: "/review/",
         element: <ReviewModal />,
+      },
+      {
+        path: "/test/",
+        element: <TestModal />,
       },
     ],
   },
