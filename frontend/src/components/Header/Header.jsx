@@ -36,7 +36,7 @@ const Header = () => {
     <header className="header">
       <div className="logo">
         <Link to="/">
-          <img src="/logo.png" alt="App Logo" className="logo-img" />
+          <img src="/png.webp" alt="App Logo" className="logo-img" />
         </Link>
       </div>
       <div className="auth-user">

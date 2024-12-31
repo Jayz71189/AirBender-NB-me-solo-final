@@ -5,6 +5,7 @@ import * as sessionActions from "../../store/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal/LoginFormModal";
 import SignupFormModal from "../SignupFormModal/SignupFormModal";
+import { Link } from "react-router-dom";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -42,6 +43,11 @@ function ProfileButton({ user }) {
 
   return (
     <>
+      <div className="logo">
+        <Link to="/">
+          <img src="/png.webp" alt="App Logo" className="logo-img" />
+        </Link>
+      </div>
       <button onClick={toggleMenu}>
         <FaUserCircle />
       </button>
