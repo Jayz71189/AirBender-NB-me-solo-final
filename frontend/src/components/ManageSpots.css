@@ -10,3 +10,8 @@
   align-items: center;
   margin-right: 20px;
 }
+
+.post-button {
+  width: fit-content;
+  border-radius: 1px;
+}

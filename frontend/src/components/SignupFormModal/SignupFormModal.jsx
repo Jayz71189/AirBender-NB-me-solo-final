@@ -44,6 +44,14 @@ function SignupFormModal() {
     });
   };
 
+  const isDisabled =
+    !username ||
+    username.length < 4 ||
+    !email ||
+    !password ||
+    password.length < 6 ||
+    password !== confirmPassword;
+
   return (
     <>
       <h1>Sign Up</h1>
@@ -108,7 +116,9 @@ function SignupFormModal() {
           />
         </label>
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
+        <button type="submit" disabled={isDisabled}>
+          Sign Up
+        </button>
       </form>
     </>
   );
