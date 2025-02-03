@@ -1,31 +1,30 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
-// import * as sessionActions from "../../store/session";
+import * as sessionActions from "../../store/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal/LoginFormModal";
 import SignupFormModal from "../SignupFormModal/SignupFormModal";
 import { Link } from "react-router-dom";
-import { logout } from "../../store/session";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
-  const dropDownMenu = useRef();
-
-  const closeMenu = () => setShowMenu(false);
+  const ulRef = useRef();
 
   const toggleMenu = (e) => {
     e.stopPropagation(); // Keep click from bubbling up to document and triggering closeMenu
     // if (!showMenu) setShowMenu(true);
-    setShowMenu((prevState) => !prevState);
+    setShowMenu(!showMenu);
   };
 
   useEffect(() => {
     if (!showMenu) return;
 
     const closeMenu = (e) => {
-      if (!dropDownMenu?.current?.contains(e.target)) setShowMenu(false);
+      if (!ulRef.current.contains(e.target)) {
+        setShowMenu(false);
+      }
     };
 
     document.addEventListener("click", closeMenu);
@@ -33,13 +32,15 @@ function ProfileButton({ user }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
-  const handleLogout = (e) => {
+  const closeMenu = () => setShowMenu(false);
+
+  const logout = (e) => {
     e.preventDefault();
-    dispatch(logout());
+    dispatch(sessionActions.logout());
     closeMenu();
   };
 
-  const dropDownClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
     <>
@@ -49,10 +50,9 @@ function ProfileButton({ user }) {
         </Link>
       </div>
       <button onClick={toggleMenu}>
-        {showMenu && user.username}
         <FaUserCircle />
       </button>
-      <ul className={dropDownClassName} ref={dropDownMenu}>
+      <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
             <li className="greeting">Hello, {user.firstName}!</li>
@@ -60,7 +60,7 @@ function ProfileButton({ user }) {
 
             <li>{user.email}</li>
             <li>
-              <button className="logout" onClick={handleLogout}>
+              <button className="logout" onClick={logout}>
                 Log Out
               </button>
             </li>

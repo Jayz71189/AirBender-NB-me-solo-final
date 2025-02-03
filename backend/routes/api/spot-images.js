@@ -19,46 +19,46 @@ router.get("/images/:id", async (req, res) => {
   }
 });
 
-// Create a new spot image for a given spot
-router.post("/images", async (req, res) => {
-  const { spotId } = req.params;
-  const { url, preview } = req.body;
+// // Create a new spot image for a given spot
+// router.post("/images", async (req, res) => {
+//   const { spotId } = req.params;
+//   const { url, preview } = req.body;
 
-  try {
-    // Ensure the spot exists
-    const spot = await Spot.findByPk(spotId);
-    if (!spot) {
-      return res.status(404).json({ message: "Spot not found" });
-    }
+//   try {
+//     // Ensure the spot exists
+//     const spot = await Spot.findByPk(spotId);
+//     if (!spot) {
+//       return res.status(404).json({ message: "Spot not found" });
+//     }
 
-    // Create the spot image
-    const newSpotImage = await SpotImage.create({
-      spotId,
-      url,
-      preview: preview || false, // Default preview to false if not provided
-    });
+//     // Create the spot image
+//     const newSpotImage = await SpotImage.create({
+//       spotId,
+//       url,
+//       preview: preview || false, // Default preview to false if not provided
+//     });
 
-    return res.status(201).json(newSpotImage);
-  } catch (error) {
-    console.error(error);
-    return res
-      .status(500)
-      .json({ message: "An error occurred while creating the spot image" });
-  }
-});
+//     return res.status(201).json(newSpotImage);
+//   } catch (error) {
+//     console.error(error);
+//     return res
+//       .status(500)
+//       .json({ message: "An error occurred while creating the spot image" });
+//   }
+// });
 
-router.post("/images", async (req, res) => {
-  const { spotId, url, preview } = req.body;
+// router.post("/images", async (req, res) => {
+//   const { spotId, url, preview } = req.body;
 
-  try {
-    const spotImage = await SpotImage.create({ spotId, url, preview });
-    res.status(201).json(spotImage);
-  } catch (error) {
-    res
-      .status(400)
-      .json({ error: "Could not create Spot Image", details: error.message });
-  }
-});
+//   try {
+//     const spotImage = await SpotImage.create({ spotId, url, preview });
+//     res.status(201).json(spotImage);
+//   } catch (error) {
+//     res
+//       .status(400)
+//       .json({ error: "Could not create Spot Image", details: error.message });
+//   }
+// });
 
 router.delete("/:imageId", requireAuth, async (req, res) => {
   try {
