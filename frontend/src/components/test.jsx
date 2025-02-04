@@ -5,12 +5,12 @@ function TestModal() {
   const [showMenu, setShowMenu] = useState(false);
 
   const toggleMenu = () => {
-    setShowMenu((prevState) => !prevState);
+    setShowMenu(!showMenu);
   };
 
   return (
     <>
-      <button onClick={toggleMenu}></button>
+      <button onClick={toggleMenu}>Toggle Menu</button>
       {showMenu && <OpenModalMenuItem />}
     </>
   );
