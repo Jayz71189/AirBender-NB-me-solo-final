@@ -18,7 +18,7 @@ const SpotTile = ({ spot }) => {
     navigate(`/spots/${id}`); // Navigate to the spot's detail page
   };
 
-  const thumbnailUrl = SpotImages?.[0]?.url || "placeholder-image-url.jpg";
+  const thumbnailUrl = SpotImages?.[0]?.url;
 
   console.log(SpotImages);
 

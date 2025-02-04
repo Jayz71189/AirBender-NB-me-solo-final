@@ -121,8 +121,7 @@ const SpotDetail = () => {
   };
 
   // Use fallback values if `images` is not defined
-  const defaultImage =
-    "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEzMTA4NjI3OTI1MjIxNDQyOA%3D%3D/original/bc989f2d-eca8-4bcf-a9b0-b70b8e685a64.jpeg?im_w=2560&im_q=highq&im_format=avif"; // Replace with your placeholder URL
+
   const displayedImages = Array.isArray(previewImage) ? previewImage : []; // Ensure `images` is an array
 
   console.log("SpotImages");
@@ -146,11 +145,7 @@ const SpotDetail = () => {
           />
           <div className="small-images">
             {displayedImages.slice(1, 5).map((img, idx) => (
-              <img
-                key={idx}
-                src={img || defaultImage}
-                alt={`Small Spot ${idx + 1}`}
-              />
+              <img key={idx} src={img} alt={`Small Spot ${idx + 1}`} />
             ))}
           </div>
         </div>
